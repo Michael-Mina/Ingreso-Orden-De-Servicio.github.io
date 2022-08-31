@@ -1,11 +1,11 @@
 import './App.css';
 import Navbar from "./Compoent/Navbar"
 import Category from "./Compoent/Category"
-import Form from './Compoent/Formularios'
+//import Form from './Compoent/Formularios'
 import Contact from "./Compoent/Contact"
 import Services from "./Compoent/Services"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-
+import Links from './Database/Links';
 
 
 
@@ -25,8 +25,8 @@ function App() {
           <Route path='/services' compoent={Services} exact>
             <Services />
           </Route>
-          <Route path='/Formularios' compoent={Form} exact>
-            <Form />
+          <Route path='/Formularios' compoent={Links} exact>
+            <Links />
           </Route>
         </Switch>
       </Router>

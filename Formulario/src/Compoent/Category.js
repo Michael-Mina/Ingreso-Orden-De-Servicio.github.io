@@ -35,6 +35,7 @@ const Category = () => {
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Enter Team</InputLabel>
               <Select
+                required
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={age}
