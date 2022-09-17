@@ -6,8 +6,8 @@ import Contact from "./Compoent/Contact"
 import Services from "./Compoent/Services"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Links from './Database/Links';
-
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -30,6 +30,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      <ToastContainer/>
     </>  
   );
 }

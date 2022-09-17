@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Formularios.css'
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,6 +7,8 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import { db } from '../Database/Firebase';
+import { toast } from 'react-toastify';
 
 
 
@@ -38,14 +40,40 @@ const Form = (props) => {
     setValues({...values, [name]: value})
   };
 
-
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
   
   const handleSubmit = (event) => {
     event.preventDefault();
+    if(!validateEmail(values.email)){
+      return toast('Invalid Email',{
+              type: 'warning',
+              autoClose: 2000,
+              theme: 'dark',
+          })
+    };
     props.addOrEditsLink(values);
     setValues({...initialStateValues});
   };
   
+  const getLinksById = async (id) => {
+    const doc = await db.collection('links').doc(id).get();
+    setValues({...doc.data()});
+  }
+
+  useEffect(() => {
+    if (props.currentId === "") {
+      setValues({ ...initialStateValues });
+    }else{
+      getLinksById(props.currentId);
+    }
+  }, [props.currentId]);
+
   return (
     <section>
       <Container component="main" maxWidth="xs">
@@ -260,7 +288,7 @@ const Form = (props) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Send
+              {props.currentId === ''? 'Send': 'Update'}
             </Button>
             
           </Box>
